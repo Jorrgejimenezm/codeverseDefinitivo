@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+  <h1>{{ publicacion.usuario }}</h1>
+  <p>{{ publicacion.contenido }}</p>
+  <p>Publicado hace {{ publicacion.fecha_publicacion|timesince }}</p>
+  {% if user == publicacion.usuario or user.is_superuser %}
+    <a href="{% url 'publicacion_update' publicacion.pk %}" class="btn btn-primary">Modificar</a>
+    <a href="{% url 'publicacion_delete' publicacion.pk %}" class="btn btn-danger">Eliminar</a>
+  {% endif %}
+
+  <h2>Contenido Multimedia</h2>
+  {% if publicacion.imagen %}
+    <img src="{{ publicacion.imagen.url }}" alt="Imagen de la publicación" class="img-fluid">
+  {% endif %}
+
+  {% if publicacion.video %}
+    <video controls class="img-fluid">
+      <source src="{{ publicacion.video.url }}" type="video/mp4">
+      Tu navegador no soporta el elemento video.
+    </video>
+  {% endif %}
+
+  <h2>Comentarios</h2>
+  {% if comentarios %}
+    <ul>
+      {% for comentario in comentarios %}
+        <li>
+          <p>{{ comentario.contenido }}</p>
+          <p>Autor: {{ comentario.autor.username }}</p>
+          <p>Fecha: {{ comentario.fecha_creacion }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No hay comentarios todavía.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        {% for publicacion in publicaciones %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ publicacion.usuario.username }}</h5>
+                    <p class="card-text">{{ publicacion.contenido|truncatewords:50 }}</p>
+                    {% if publicacion.imagen %}
+                    <img src="{{ publicacion.imagen.url }}" class="card-img-top" alt="Imagen de la publicación">
+                    {% endif %}
+                    <p class="card-text mt-2"><small class="text-muted">Publicado hace {{ publicacion.fecha_publicacion|timesince }}</small></p>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'publicacion_detail' publicacion.pk %}" class="btn btn-success">Ver más</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

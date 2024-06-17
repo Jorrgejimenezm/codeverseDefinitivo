@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="align-items-center d-flex pt-5">
+    <div class="text-center mx-auto">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {{form.as_table }}
+            </table>
+            <input type="submit" value="Modificar" class="btn btn-primary m-5">
+        </form>
+    </div>
+</div>
+{% endblock %}
